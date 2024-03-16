@@ -85,7 +85,7 @@ resource "aws_instance" "web-server1" {
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.public-subnet1.id
   vpc_security_group_ids      = [aws_security_group.webserver-sg.id]
-  key_name = aws_key_pair.webserver-demo-key
+  key_name = aws_key_pair.webserver-demo-key.id
   associate_public_ip_address = true
 
   tags = {
@@ -101,7 +101,7 @@ resource "aws_instance" "web-server2" {
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.public-subnet2.id
   vpc_security_group_ids      = [aws_security_group.webserver-sg.id]
-  key_name = aws_key_pair.webserver-demo-key
+  key_name = aws_key_pair.webserver-demo-key.id
   associate_public_ip_address = true
 
   tags = {
