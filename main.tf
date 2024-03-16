@@ -190,3 +190,21 @@ resource "aws_route_table_association" "public-association-2" {
   subnet_id      = aws_subnet.public-subnet2.id
   route_table_id = aws_route_table.public-rt.id
 }
+
+/***********************************************
+*       Application load balancer              *
+***********************************************/
+
+resource "aws_lb" "test" {
+  name               = "test-lb-tf"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.webserver-sg.id]
+  subnets            = [for subnet in aws_subnet.public-subnet1.id : aaws_instance.web-server2.id]
+
+  enable_deletion_protection = true
+
+  tags = {
+    Environment = "test"
+  }
+}
