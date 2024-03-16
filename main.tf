@@ -200,7 +200,7 @@ resource "aws_lb" "test" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.webserver-sg.id]
-  subnets            = [for subnet in aws_subnet.public-subnet1.id : aws_instance.web-server2.id]
+  subnets            = [for subnet in aws_subnet.public-subnet1.id : aws_instance.web-server1.id]
 
   enable_deletion_protection = true
 
