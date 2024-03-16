@@ -132,6 +132,19 @@ resource "aws_security_group" "webserver-sg" {
 }
 
 /*******************************
+*        internet gateway         *
+********************************/
+
+resource "aws_internet_gateway" "gw" {
+  vpc_id = aws_vpc.vpc.id
+
+  tags = {
+    Name = "internet gw"
+  }
+}
+
+
+/*******************************
 *        route table         *
 ********************************/
 
@@ -154,7 +167,7 @@ resource "aws_route_table" "public-rt" {
 ************************************/
 
 resource "aws_route_table_association" "public-association-1" {
-  subnet_id      = aws_subnet.public-subnet.id
+  subnet_id      = aws_subnet.public-subnet1.id
   route_table_id = aws_route_table.public-rt.id
 }
 
