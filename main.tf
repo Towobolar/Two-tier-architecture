@@ -58,7 +58,7 @@ resource "aws_subnet" "private-subnet1" {
 *     private subnet2               *
 **********************************/
 
-resource "aws_subnet" "private-subnet1" {
+resource "aws_subnet" "private-subnet2" {
   vpc_id     = aws_vpc.vpc.id
   cidr_block = "10.0.4.0/24"
   availability_zone = "eu-west-2b"
