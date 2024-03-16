@@ -68,18 +68,28 @@ resource "aws_subnet" "private-subnet2" {
   }
 }
 
+/***********************************************
+*           instance key pair                  *
+************************************************/
+
+resource "aws_key_pair" "webserver-demo-key" {
+  key_name   = "demo-key"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDuNDjqNLmFDfpAfLyk0xJI/mnsQJY7CBxcAqMOHnEUkRjdVtwDCGDadnG77iZjI0sNpVXqkZacSaxx684xGdy0tWihuixP81Kn+Zsgdwi+Mx4WjPfgT2s27lba2kZhJC0pEr5hzHEJWNwX1aOvQjGzIGr+898y6gwp/DK3cggFEQ/jNBCS76NYUFODQGpR4Wiw9cOo1B1TiGe0UW3H183+h/q1Fv3yGvFm6J0iQC83soT5hcskmuoDbstJF/y5jd7ghcQB+v67C3IWuC9oKnq+mte0oRg7+G7NnGsv1S3yBQobs8AuazOTPUmmQ/q/ThSClqwPUTd3ajfAd2sqz73+04ZDO+oZJsdYUUTl+rPzH3Qsn645iD+NJhK+G9Y8Kq6NWs2x+C2ikIPof8QIL/GfOfAk4TNi5DwCNTnhEJthPug6Zw7MhsySNjR5B5lin2Pa9iAmKLQ5XTNDvLs+gNqeEVWoBoYvM78CEh4A7+Q2Q224DvMeKrpgiVqUdI02Ht0= abbey@TOWOBOLA"
+}
+
 /*******************************
-*        ec2 instance         *
+*        ec2 instance1         *
 ********************************/
 resource "aws_instance" "web-server1" {
   ami                         = "ami-09885f3ec1667cbfc"
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.public-subnet1.id
   vpc_security_group_ids      = [aws_security_group.webserver-sg.id]
+  key_name = aws_key_pair.webserver-demo-key
   associate_public_ip_address = true
 
   tags = {
-    Name = "web ec2"
+    Name = "first web ec2"
   }
 }
 
@@ -91,10 +101,11 @@ resource "aws_instance" "web-server2" {
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.public-subnet2.id
   vpc_security_group_ids      = [aws_security_group.webserver-sg.id]
+  key_name = aws_key_pair.webserver-demo-key
   associate_public_ip_address = true
 
   tags = {
-    Name = "web ec2"
+    Name = "second web ec2"
   }
 }
 
