@@ -226,7 +226,7 @@ resource "aws_lb_target_group_attachment" "test1" {
 
 resource "aws_lb_target_group_attachment" "test2" {
   target_group_arn = aws_lb_target_group.alb-target-grp.arn
-  target_id        = aws_instance.web-server2
+  target_id        = aws_instance.web-server2.id
   port             = 80
 }
 
