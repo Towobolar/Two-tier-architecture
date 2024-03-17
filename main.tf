@@ -218,16 +218,27 @@ resource "aws_lb_target_group" "alb-target-grp" {
   vpc_id      = aws_vpc.vpc.id
 }
 
-resource "aws_lb_target_group_attachment" "test" {
+resource "aws_lb_target_group_attachment" "test1" {
   target_group_arn = aws_lb_target_group.alb-target-grp.arn
   target_id        = aws_instance.web-server1.id
   port             = 80
 }
 
-resource "aws_lb_target_group_attachment" "test" {
+resource "aws_lb_target_group_attachment" "test2" {
   target_group_arn = aws_lb_target_group.alb-target-grp.arn
   target_id        = aws_instance.web-server2
   port             = 80
+}
+
+resource "aws_lb_listener" "lb_lst" {
+  load_balancer_arn = aws_lb.application-lb.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.alb-target-grp
+  }
 }
 
 
