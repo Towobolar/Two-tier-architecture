@@ -201,13 +201,6 @@ resource "aws_lb" "aws-alb" {
   load_balancer_type = "application"
   security_groups    = [aws_security_group.webserver-sg.id]
   subnets            = [aws_subnet.public-subnet1.id, aws_instance.web-server1.id]
-  
-
-  enable_deletion_protection = true
-
-  tags = {
-    Environment = "test"
-  }
 }
 
 resource "aws_lb_target_group" "alb-target-grp" {
