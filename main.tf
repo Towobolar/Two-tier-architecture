@@ -210,6 +210,27 @@ resource "aws_lb" "application-lb" {
   }
 }
 
+resource "aws_lb_target_group" "alb-target-grp" {
+  name        = "alb-target-grp"
+  target_type = "alb"
+  port        = 80
+  protocol    = "TCP"
+  vpc_id      = aws_vpc.vpc.id
+}
+
+resource "aws_lb_target_group_attachment" "test" {
+  target_group_arn = aws_lb_target_group.alb-target-grp.arn
+  target_id        = aws_instance.web-server1.id
+  port             = 80
+}
+
+resource "aws_lb_target_group_attachment" "test" {
+  target_group_arn = aws_lb_target_group.alb-target-grp.arn
+  target_id        = aws_instance.web-server2
+  port             = 80
+}
+
+
 /**************************************
 *      Database subnet group          *
 **************************************/
