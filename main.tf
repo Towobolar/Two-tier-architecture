@@ -17,8 +17,8 @@ resource "aws_vpc" "vpc" {
 **********************************/
 
 resource "aws_subnet" "public-subnet1" {
-  vpc_id     = aws_vpc.vpc.id
-  cidr_block = "10.0.1.0/24"
+  vpc_id            = aws_vpc.vpc.id
+  cidr_block        = "10.0.1.0/24"
   availability_zone = "eu-west-2a"
 
   tags = {
@@ -31,8 +31,8 @@ resource "aws_subnet" "public-subnet1" {
 **********************************/
 
 resource "aws_subnet" "public-subnet2" {
-  vpc_id     = aws_vpc.vpc.id
-  cidr_block = "10.0.2.0/24"
+  vpc_id            = aws_vpc.vpc.id
+  cidr_block        = "10.0.2.0/24"
   availability_zone = "eu-west-2b"
 
   tags = {
@@ -45,8 +45,8 @@ resource "aws_subnet" "public-subnet2" {
 **********************************/
 
 resource "aws_subnet" "private-subnet1" {
-  vpc_id     = aws_vpc.vpc.id
-  cidr_block = "10.0.3.0/24"
+  vpc_id            = aws_vpc.vpc.id
+  cidr_block        = "10.0.3.0/24"
   availability_zone = "eu-west-2a"
 
   tags = {
@@ -59,8 +59,8 @@ resource "aws_subnet" "private-subnet1" {
 **********************************/
 
 resource "aws_subnet" "private-subnet2" {
-  vpc_id     = aws_vpc.vpc.id
-  cidr_block = "10.0.4.0/24"
+  vpc_id            = aws_vpc.vpc.id
+  cidr_block        = "10.0.4.0/24"
   availability_zone = "eu-west-2b"
 
   tags = {
@@ -85,7 +85,7 @@ resource "aws_instance" "web-server1" {
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.public-subnet1.id
   vpc_security_group_ids      = [aws_security_group.webserver-sg.id]
-  key_name = aws_key_pair.webserver-demo-key.id
+  key_name                    = aws_key_pair.webserver-demo-key.id
   associate_public_ip_address = true
 
   tags = {
@@ -101,7 +101,7 @@ resource "aws_instance" "web-server2" {
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.public-subnet2.id
   vpc_security_group_ids      = [aws_security_group.webserver-sg.id]
-  key_name = aws_key_pair.webserver-demo-key.id
+  key_name                    = aws_key_pair.webserver-demo-key.id
   associate_public_ip_address = true
 
   tags = {
@@ -227,16 +227,16 @@ resource "aws_db_subnet_group" "default-db-sg" {
 ************************************/
 
 resource "aws_db_instance" "db-instance" {
-  allocated_storage    = 20
-  db_name              = "mydb"
-  engine               = "mysql"
-  engine_version       = "5.7"
-  instance_class       = "db.t3.micro"
-  username             = "sam"
-  password             = "Samuel123"
-  parameter_group_name = "default.mysql5.7"
-  skip_final_snapshot  = true
-  db_subnet_group_name = aws_db_subnet_group.default-db-sg.id
+  allocated_storage      = 20
+  db_name                = "mydb"
+  engine                 = "mysql"
+  engine_version         = "5.7"
+  instance_class         = "db.t3.micro"
+  username               = "sam"
+  password               = "Samuel123"
+  parameter_group_name   = "default.mysql5.7"
+  skip_final_snapshot    = true
+  db_subnet_group_name   = aws_db_subnet_group.default-db-sg.id
   vpc_security_group_ids = [aws_security_group.db-sg.id]
 }
 
@@ -249,9 +249,9 @@ resource "aws_security_group" "db-sg" {
   description = "Allows inbound traffic"
   vpc_id      = aws_vpc.vpc.id
   ingress {
-    from_port       = 3306
-    to_port         = 3306
-    protocol        = "tcp"
+    from_port = 3306
+    to_port   = 3306
+    protocol  = "tcp"
   }
 
   egress {
