@@ -208,3 +208,57 @@ resource "aws_lb" "test" {
     Environment = "test"
   }
 }
+
+/**************************************
+*      Database subnet group          *
+**************************************/
+
+resource "aws_db_subnet_group" "default-db-sg" {
+  name       = "main"
+  subnet_ids = [aws_subnet.private-subnet1.id, aws_subnet.private-subnet2.id]
+
+  tags = {
+    Name = "My DB subnet group"
+  }
+}
+
+/************************************
+*     Database instance             *
+************************************/
+
+resource "aws_db_instance" "db-instance" {
+  allocated_storage    = 20
+  db_name              = "mydb"
+  engine               = "mysql"
+  engine_version       = "5.7"
+  instance_class       = "db.t3.micro"
+  username             = "sam"
+  password             = "Samuel123"
+  parameter_group_name = "default.mysql5.7"
+  skip_final_snapshot  = true
+  db_subnet_group_name = aws_db_subnet_group.default-db-sg.id
+  vpc_security_group_ids = [aws_security_group.db-sg]
+}
+
+/**************************************************
+*    Create a Security group for Database server  *
+**************************************************/
+
+resource "aws_security_group" "db-sg" {
+  name        = "db_sg"
+  description = "Allows inbound traffic"
+  vpc_id      = aws_vpc.vpc.id
+  ingress {
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = [aws_security_group.vpc.id]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
