@@ -237,7 +237,7 @@ resource "aws_lb_listener" "lb_lst" {
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.alb-target-grp
+    target_group_arn = aws_lb_target_group.alb-target-grp.arn
   }
 }
 
