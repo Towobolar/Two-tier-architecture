@@ -200,12 +200,12 @@ resource "aws_lb" "my-aws-alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.webserver-sg.id]
-  subnets            = [aws_subnet.public-subnet1.id, aws_subnet.private-subnet2.id]
+  subnets            = [aws_subnet.public-subnet1.id, aws_subnet.public-subnet2.id]
 }
 
 resource "aws_lb_target_group" "alb-target-grp" {
   name        = "alb-target-grp"
-  target_type = "alb"
+  target_type = "instance"
   port        = 80
   protocol    = "TCP"
   vpc_id      = aws_vpc.vpc.id
