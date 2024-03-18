@@ -207,7 +207,7 @@ resource "aws_lb_target_group" "alb-target-grp" {
   name        = "alb-target-grp"
   target_type = "alb"
   port        = 80
-  protocol    = "TCP"
+  protocol    = "tcp"
   vpc_id      = aws_vpc.vpc.id
 }
 
@@ -226,7 +226,7 @@ resource "aws_lb_target_group_attachment" "my-aws-alb2" {
 resource "aws_lb_listener" "lb_lst" {
   load_balancer_arn = aws_lb.my-aws-alb.arn
   port              = "80"
-  protocol          = "HTTP"
+  protocol          = "http"
 
   default_action {
     type             = "forward"
