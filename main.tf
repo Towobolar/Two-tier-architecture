@@ -200,7 +200,7 @@ resource "aws_lb" "my-aws-alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.webserver-sg.id]
-  subnets            = [aws_subnet.public-subnet1.id, aws_instance.web-server1.id]
+  subnets            = [aws_subnet.public-subnet1.id, aws_subnet.private-subnet2.id]
 }
 
 resource "aws_lb_target_group" "alb-target-grp" {
@@ -258,8 +258,8 @@ resource "aws_db_instance" "db-instance" {
   engine                 = "mysql"
   engine_version         = "5.7"
   instance_class         = "db.t3.micro"
-  username               = "sam"
-  password               = "Samuel123"
+  username               = "admin"
+  password               = "password"
   parameter_group_name   = "default.mysql5.7"
   skip_final_snapshot    = true
   db_subnet_group_name   = aws_db_subnet_group.default-db-sg.id
@@ -274,10 +274,20 @@ resource "aws_security_group" "db-sg" {
   name        = "db_sg"
   description = "Allows inbound traffic"
   vpc_id      = aws_vpc.vpc.id
+
   ingress {
-    from_port = 3306
-    to_port   = 3306
-    protocol  = "tcp"
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    protocol    = "tcp"
+    self        = true
+    from_port   = 22
+    to_port     = 22
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
