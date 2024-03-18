@@ -195,7 +195,7 @@ resource "aws_route_table_association" "public-association-2" {
 *       Application load balancer              *
 ***********************************************/
 
-resource "aws_lb" "aws-alb" {
+resource "aws_lb" "my-aws-alb" {
   name               = "test-lb-tf"
   internal           = false
   load_balancer_type = "application"
@@ -211,20 +211,20 @@ resource "aws_lb_target_group" "alb-target-grp" {
   vpc_id      = aws_vpc.vpc.id
 }
 
-resource "aws_lb_target_group_attachment" "alb-tg" {
+resource "aws_lb_target_group_attachment" "my-aws-alb1" {
   target_group_arn = aws_lb_target_group.alb-target-grp.arn
   target_id        = aws_instance.web-server1.id
   port             = 80
 }
 
-resource "aws_lb_target_group_attachment" "alb-TG" {
+resource "aws_lb_target_group_attachment" "my-aws-alb2" {
   target_group_arn = aws_lb_target_group.alb-target-grp.arn
   target_id        = aws_instance.web-server2.id
   port             = 80
 }
 
 resource "aws_lb_listener" "lb_lst" {
-  load_balancer_arn = aws_lb.aws-alb.arn
+  load_balancer_arn = aws_lb.my-aws-alb.arn
   port              = "80"
   protocol          = "HTTP"
 
